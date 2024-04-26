@@ -23,7 +23,9 @@ public class MemberServiceImpl {
                 .build();
         memberRepository.save(member);
     }
-
+    public void usernameCheck(String username){
+        memberRepository.CustomfindByUsername(username);
+    }
 
 
 }
