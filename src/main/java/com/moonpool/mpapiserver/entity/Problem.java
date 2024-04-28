@@ -36,6 +36,9 @@ public class Problem {
 
     private Integer answer;
 
+    @Builder.Default
+    private Boolean delFlag = false;
+
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id",
@@ -73,5 +76,9 @@ public class Problem {
 
     public void changeAnswer(Integer answer) {
         this.answer = answer;
+    }
+
+    public void changeDelFlag(Boolean delFlag){
+        this.delFlag = true;
     }
 }
