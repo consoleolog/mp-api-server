@@ -18,7 +18,7 @@ import java.util.Map;
 public class ProblemController {
     private final FileHandler fileHandler;
     private final ProblemService problemService;
-    @GetMapping("/list/{category}/{id}")
+    @GetMapping("/{category}/{id}")
     public ResponseEntity<Map> getList(@PathVariable("category")String category,
                                      @PathVariable("id")Long id){
         Map<String,Object> result = problemService.getList(id, category);
@@ -31,7 +31,7 @@ public class ProblemController {
         return ResponseEntity.ok(result);
     }
     @PostMapping("/post")
-    public ResponseEntity<String> post(@RequestBody ProblemDto problemDto){
+    public ResponseEntity<String> post(ProblemDto problemDto){
         problemService.post(problemDto);
         return ResponseEntity.status(HttpStatus.CREATED).body("문제 등록 완료");
     }
