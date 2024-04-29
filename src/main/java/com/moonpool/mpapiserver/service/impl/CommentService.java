@@ -8,7 +8,7 @@ import java.util.List;
 
 @Transactional
 public interface CommentService {
-    List<Comment> getList(Long id);
+    List<?> getList(Long id);
     void register(CommentDto commentDto);
     void modify(CommentDto commentDto);
     void delete(Long id);

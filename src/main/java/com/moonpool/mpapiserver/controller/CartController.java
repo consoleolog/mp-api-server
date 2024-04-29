@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/mp/cart")
+@RequestMapping("/mp/carts")
 @RestController
 public class CartController {
     private final CartService cartService;
     @GetMapping("/{id}")
     public ResponseEntity<List> getList(@PathVariable("id")Long id){
-        List<Cart> result = cartService.getList(id);
+        List<?> result = cartService.getList(id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(result);
     }
     @PostMapping("/register")

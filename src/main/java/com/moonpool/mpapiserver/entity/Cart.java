@@ -18,21 +18,14 @@ public class Cart {
     @Column(name = "cart_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "problem_id",
-            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Problem problem;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id",
-            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Member member;
+    private Long problemId;
+    private Long ownerId;
 
     public CartDto toDto(Cart cart){
         return CartDto.builder()
                 .id(cart.getId())
-                .problemId(cart.getProblem().getId())
-                .ownerId(cart.getMember().getId())
+                .problemId(cart.getProblemId())
+                .ownerId(cart.getOwnerId())
                 .build();
     }
 }

@@ -10,10 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class CartDto {
-
-
     private Long id;
     private Long problemId;
     private Long ownerId;
-
 }

@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Transactional
 public interface ProblemService {
-    Problem getOne(Long id);
+    Object getOne(Long id);
     void post(ProblemDto problemDto);
     Map<String, Object> getList(Long id, String category);
 

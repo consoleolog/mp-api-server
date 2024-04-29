@@ -5,13 +5,14 @@ import com.moonpool.mpapiserver.entity.Problem;
 import com.moonpool.mpapiserver.handler.FileHandler;
 import com.moonpool.mpapiserver.service.impl.ProblemService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-
+@Log4j2
 @RequiredArgsConstructor
 @RequestMapping("/mp/problems")
 @RestController
@@ -27,7 +28,7 @@ public class ProblemController {
 
     @GetMapping("/detail/{id}")
     public ResponseEntity<?> getOne(@PathVariable("id") Long id){
-        Problem result = problemService.getOne(id);
+        Object result = (Problem) problemService.getOne(id);
         return ResponseEntity.ok(result);
     }
     @PostMapping("/post")
@@ -40,6 +41,13 @@ public class ProblemController {
         return fileHandler.getFile(fileName);
     }
 
+//    @PostMapping("/dasd")
+//    public ResponseEntity<?> login(@RequestParam String username,
+//                                   @RequestPart String password){
+//        String requestUsername = username;
+//        String requestPassword = password;
+//
+//    }
 
 
 }

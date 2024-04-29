@@ -1,7 +1,6 @@
 package com.moonpool.mpapiserver.service;
 
 import com.moonpool.mpapiserver.dto.ProblemDto;
-import com.moonpool.mpapiserver.entity.Answer;
 import com.moonpool.mpapiserver.entity.Member;
 import com.moonpool.mpapiserver.entity.Problem;
 import com.moonpool.mpapiserver.handler.FileHandler;
@@ -24,9 +23,9 @@ public class ProblemServiceImpl implements ProblemService {
     private final AnswerRepository answerRepository;
 
     @Override
-    public Problem getOne(Long id){
-        Optional<Problem> result = problemRepository.findById(id);
-        Problem problem = result.orElseThrow();
+    public Object getOne(Long id){
+        Optional<?> result = problemRepository.findById(id);
+        var problem = result.orElseThrow();
         return problem;
     }
     @Override
@@ -45,7 +44,7 @@ public class ProblemServiceImpl implements ProblemService {
                 .level(problemDto.getLevel())
                 .quizImgName(quizImgName)
                 .answer(problemDto.getAnswer())
-                .member(member)
+                .writerId(problemDto.getWriterId())
                 .build();
         problemRepository.save(problem);
 

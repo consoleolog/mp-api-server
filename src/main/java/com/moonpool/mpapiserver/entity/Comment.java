@@ -20,22 +20,24 @@ public class Comment {
 
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "writer_id",
-            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Member member;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id",
-            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Problem problem;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "writer_id",
+//            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+//    private Member member;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "parent_id",
+//            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+//    private Problem problem;
+    private Long writerId;
+    private Long parentId;
 
     public CommentDto toDto(Comment comment){
         return CommentDto.builder()
                 .id(comment.getId())
                 .content(comment.getContent())
-                .writerId(comment.getMember().getId())
-                .parentId(comment.getProblem().getId())
+                .writerId(comment.getWriterId())
+                .parentId(comment.getParentId())
                 .build();
     }
     public void changeContent(String content){

@@ -22,12 +22,12 @@ public class CommentServiceImpl implements CommentService {
     private final MemberRepository memberRepository;
     private final ProblemRepository problemRepository;
 
-    public List<Comment> getList(Long id){
+    public List<?> getList(Long id){
 //        commentRepository.findAllByParentId(id,PageRequest.of(1,10, Sort.by("comment_id").descending()));
         //id 가 문제 아이디임
         Sort sort = Sort.by(Sort.Direction.DESC, "comment_id"); // 내림차순으로 commentId 기준 정렬
-        List<Comment> comments = commentRepository.findAllByParentId(id, sort);
-        return commentRepository.findAllByParentId(id, sort);
+
+        return null;
     }
 
     public void register(CommentDto commentDto){

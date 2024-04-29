@@ -39,12 +39,12 @@ public class Problem {
     @Builder.Default
     private Boolean delFlag = false;
 
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "writer_id",
-    foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Member member;
-
+//    @ToString.Exclude
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "writer_id",
+//    foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+//    private Member member;
+    private Long writerId;
     @ToString.Exclude
     @Builder.Default
     @OneToMany(mappedBy = "problem",fetch = FetchType.LAZY)

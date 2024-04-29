@@ -21,20 +21,14 @@ public class CartServiceImpl implements CartService {
     private final MemberRepository memberRepository;
     private final ProblemRepository problemRepository;
     public void register(CartDto cartDto){
-        Optional<Member> memberResult = memberRepository.findById(cartDto.getOwnerId());
-        Member member = memberResult.orElseThrow();
-        member.getId();
-        Optional<Problem> problemResult = problemRepository.findById(cartDto.getProblemId());
-        Problem problem = problemResult.orElseThrow();
-        problem.getId();
         Cart cart = Cart.builder()
                 .id(cartDto.getId())
-                .problem(problem)
-                .member(member)
+                .problemId(cartDto.getProblemId())
+                .ownerId(cartDto.getOwnerId())
                 .build();
         cartRepository.save(cart);
     }
-    public List<Cart> getList(Long id){
+    public List<?> getList(Long id){
         return cartRepository.findAllByOwnerId(id);
     }
     public void delete(Long id){

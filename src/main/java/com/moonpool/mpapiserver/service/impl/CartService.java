@@ -10,7 +10,7 @@ import java.util.List;
 public interface CartService {
     void register(CartDto cartDto);
 
-    List<Cart> getList(Long id);
+    List<?> getList(Long id);
 
     void delete(Long id);
 }

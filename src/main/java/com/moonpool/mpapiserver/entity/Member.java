@@ -23,22 +23,22 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column(length = 20)
+    @Column(length = 30)
     private String displayName;
 
     @Column(length = 100)
     private String intro;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 30, nullable = false)
     private String educationState;
 
     @Builder.Default
     private Integer coin = 1000;
 
-    @ToString.Exclude
-    @Builder.Default
-    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY)
-    List<Problem> problems = new ArrayList<>();
+//    @ToString.Exclude
+//    @Builder.Default
+//    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY)
+//    List<Problem> problems = new ArrayList<>();
 
     public void changeDisplayName(String displayName) {
         this.displayName = displayName;
