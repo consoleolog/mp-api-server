@@ -4,13 +4,13 @@ import com.moonpool.mpapiserver.dto.ProblemDto;
 import com.moonpool.mpapiserver.entity.Member;
 import com.moonpool.mpapiserver.entity.Problem;
 import com.moonpool.mpapiserver.handler.FileHandler;
-import com.moonpool.mpapiserver.repository.AnswerRepository;
 import com.moonpool.mpapiserver.repository.MemberRepository;
 import com.moonpool.mpapiserver.repository.ProblemRepository;
 import com.moonpool.mpapiserver.service.impl.ProblemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -20,7 +20,6 @@ public class ProblemServiceImpl implements ProblemService {
     private final ProblemRepository problemRepository;
     private final MemberRepository memberRepository;
     private final FileHandler fileHandler;
-    private final AnswerRepository answerRepository;
 
     @Override
     public Object getOne(Long id){
@@ -29,12 +28,10 @@ public class ProblemServiceImpl implements ProblemService {
         return problem;
     }
     @Override
-    public void post(ProblemDto problemDto){
-        String quizImgName = fileHandler.saveQuizFile(problemDto.getQuizImgFile());
-        List<String> answerImgNames = fileHandler.saveAnswerFiles(problemDto.getAnswerImgFiles());
+    public void post(ProblemDto problemDto) throws IOException {
+        String quizImgName = fileHandler.saveFile(problemDto.getQuizImgFile());
+        String answerImgName = fileHandler.saveFile(problemDto.getAnswerImgFile());
         Optional<Member> result = memberRepository.findById(problemDto.getWriterId());
-        Member member = result.orElseThrow();
-        member.getId();
         Problem problem = Problem.builder()
                 .id(problemDto.getId())
                 .title(problemDto.getTitle())
@@ -43,11 +40,11 @@ public class ProblemServiceImpl implements ProblemService {
                 .category(problemDto.getCategory())
                 .level(problemDto.getLevel())
                 .quizImgName(quizImgName)
+                .answerImgName(answerImgName)
                 .answer(problemDto.getAnswer())
                 .writerId(problemDto.getWriterId())
                 .build();
         problemRepository.save(problem);
-
     }
 
     @Override
@@ -67,11 +64,13 @@ public class ProblemServiceImpl implements ProblemService {
         result.put("start", start);
         return result;
     }
-
-    public void modify(ProblemDto problemDto){
+    @Override
+    public void modify(ProblemDto problemDto) throws IOException {
         // 일단 조회
         Optional<Problem> result = problemRepository.findById(problemDto.getId());
         Problem problem = result.orElseThrow();
+        String quizImgName;
+        String answerImgName;
         //변경 내용 반영
         problem.changeTitle(problemDto.getTitle());
         problem.changePrice(problemDto.getPrice());
@@ -79,15 +78,15 @@ public class ProblemServiceImpl implements ProblemService {
         problem.changeCategory(problemDto.getCategory());
         problem.changeLevel(problemDto.getLevel());
         problem.changeAnswer(problemDto.getAnswer());
-
-
-        // 이미지
-        List<String> answerImgNames = answerRepository.findAllByParentId(problemDto.getId());
-        fileHandler.deleteFiles(answerImgNames);
-
-        //저장
-
-
+        if (problemDto.getQuizImgFile() != null){
+            quizImgName = fileHandler.saveFile(problemDto.getQuizImgFile());
+            problem.changeQuizImgName(quizImgName);
+        }
+        if (problemDto.getAnswerImgFile() != null){
+            answerImgName = fileHandler.saveFile(problemDto.getAnswerImgFile());
+            problem.changeAnswerImgName(answerImgName);
+        }
+        problemRepository.save(problem);
     }
 
 }

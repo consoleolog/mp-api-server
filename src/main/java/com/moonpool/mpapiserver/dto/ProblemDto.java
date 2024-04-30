@@ -20,7 +20,8 @@ public class ProblemDto {
     private String category;
     private String level;
     private MultipartFile quizImgFile;
-    private List<MultipartFile> answerImgFiles;
+//    private List<MultipartFile> answerImgFiles;
+    private MultipartFile answerImgFile;
     private Integer answer;
     private Long writerId;
 

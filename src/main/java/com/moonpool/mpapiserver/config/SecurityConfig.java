@@ -35,15 +35,13 @@ public class SecurityConfig {
         http.authorizeHttpRequests(config->{
             config.requestMatchers("/**").permitAll();
         });
-        log.info(".........지금부터 폼 로그인 시작");
         http.formLogin((formLogin) -> {
             formLogin.loginPage("/mp/members/login")
 //                    .successHandler(new LoginSuccessHandler())
 //                    .failureHandler(new LoginFailHandler())
-                    .loginProcessingUrl("/mp/members/login")
+//                    .loginProcessingUrl("/mp/members/login")
                     .defaultSuccessUrl("/mp/members");
         });
-        log.info("......... 폼 로그인 끝");
         http.logout(logout ->
                 logout.logoutUrl("/mp/members/logout")
                         .logoutSuccessUrl("/mp/members")
@@ -59,7 +57,7 @@ public class SecurityConfig {
     @Bean //cors 설정
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000","https://consoleolog.github.io/"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000","https://consoleolog.github.io/"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","HEAD","OPTIONS"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));

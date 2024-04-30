@@ -8,6 +8,8 @@ import com.moonpool.mpapiserver.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +40,7 @@ public class MemberServiceImpl implements MemberService {
     public Map<String, Object> userInfo(Authentication auth){
         if (auth == null){
             Map<String, Object> userData = new HashMap<>();
-            userData.put("id", "no-login-user");
+            userData.put("id", null);
             return userData;
         } else {
             UserDto result = (UserDto) auth.getPrincipal();
@@ -46,7 +48,7 @@ public class MemberServiceImpl implements MemberService {
             userData.put("id", result.getId());
             userData.put("username", result.getUsername());
             userData.put("displayName", result.getDisplayName());
-            userData.put("educateState", result.getEducationState());
+            userData.put("educationState", result.getEducationState());
             userData.put("coin", result.getCoin());
             return userData;
         }
@@ -65,3 +67,4 @@ public class MemberServiceImpl implements MemberService {
 //        loginInfo =
     }
 }
+

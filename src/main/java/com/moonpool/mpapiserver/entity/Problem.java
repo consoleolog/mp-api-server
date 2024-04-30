@@ -34,6 +34,8 @@ public class Problem {
 
     private String quizImgName;
 
+    private String answerImgName;
+
     private Integer answer;
 
     @Builder.Default
@@ -45,10 +47,10 @@ public class Problem {
 //    foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
 //    private Member member;
     private Long writerId;
-    @ToString.Exclude
-    @Builder.Default
-    @OneToMany(mappedBy = "problem",fetch = FetchType.LAZY)
-    private List<Answer> answers = new ArrayList<>();
+//    @ToString.Exclude
+//    @Builder.Default
+//    @OneToMany(mappedBy = "problem",fetch = FetchType.LAZY)
+//    private List<Answer> answers = new ArrayList<>();
 
     public void changeTitle(String title) {
         this.title = title;
@@ -76,6 +78,10 @@ public class Problem {
 
     public void changeAnswer(Integer answer) {
         this.answer = answer;
+    }
+
+    public void changeAnswerImgName(String answerImgName){
+        this.answerImgName = answerImgName;
     }
 
     public void changeDelFlag(Boolean delFlag){

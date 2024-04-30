@@ -27,9 +27,9 @@ public class UsersDetailService implements UserDetailsService {
         if (result.isEmpty()){
             throw new UsernameNotFoundException(username+"라는 아이디 없음");
         }
-        Member user = result.get();
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        Member user = result.get();
         UserDto userDto = new UserDto(user.getUsername(), user.getPassword(), authorities);
         userDto.id = user.getId();
         userDto.username = user.getUsername();
@@ -38,7 +38,7 @@ public class UsersDetailService implements UserDetailsService {
         userDto.educationState = user.getEducationState();
         userDto.coin = user.getCoin();
         log.info(userDto);
-        log.info("..........userdetailsservice");
         return userDto;
     }
 }
+

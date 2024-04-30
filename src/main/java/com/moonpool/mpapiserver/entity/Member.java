@@ -51,6 +51,9 @@ public class Member extends BaseTimeEntity {
     public void changeIntro(String intro) {
         this.intro = intro;
     }
+    public void changeCoin(Integer coin){
+        this.coin = coin;
+    }
 
     public void changeEducationState(String educationState) {
         this.educationState = educationState;

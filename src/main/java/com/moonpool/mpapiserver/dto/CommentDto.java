@@ -1,5 +1,6 @@
 package com.moonpool.mpapiserver.dto;
 
+import com.moonpool.mpapiserver.entity.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,4 +15,12 @@ public class CommentDto {
     private String content;
     private Long writerId;
     private Long parentId;
+
+    public Comment toEntity(CommentDto commentDto){
+        return Comment.builder()
+                .content(commentDto.getContent())
+                .parentId(commentDto.getParentId())
+                .writerId(commentDto.getWriterId())
+                .build();
+    }
 }

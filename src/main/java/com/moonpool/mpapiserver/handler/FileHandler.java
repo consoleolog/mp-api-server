@@ -47,12 +47,13 @@ public class FileHandler {
         }
         return answeImgrNames;
     }
-    public String saveQuizFile(MultipartFile quizFile) throws RuntimeException{
+    public String saveFile(MultipartFile quizFile) throws RuntimeException, IOException {
         if (quizFile == null || quizFile.isEmpty()){
             return "";
         }
         String savedName = UUID.randomUUID().toString()+"Q_"+quizFile.getOriginalFilename();
         Path savePath = Paths.get(uploadPath,savedName);
+        quizFile.transferTo(savePath);
         return savedName;
     }
     public ResponseEntity<Resource> getFile(String fileName){ //파일 조회

@@ -11,17 +11,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Entity
-public class Comment extends BaseTimeEntity{
+public class Sales {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
+    @Column(name = "sales_id")
     private Long id;
 
-    @Column(length = 200)
-    private String content;
+    private Long problemId;
 
-    private Long writerId;
-    private Long parentId;
-
+    private Long memberId;
 
 
 }
