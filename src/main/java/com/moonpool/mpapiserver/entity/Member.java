@@ -35,6 +35,19 @@ public class Member extends BaseTimeEntity {
     @Builder.Default
     private Integer coin = 1000;
 
+    @ToString.Exclude
+    @ElementCollection(fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<MemberRole> memberRoleList = new ArrayList<>();
+
+    public void addRole(MemberRole memberRole){
+        memberRoleList.add(memberRole);
+    }
+    public void clearRole(){
+        memberRoleList.clear();
+    }
+
+
 //    @ToString.Exclude
 //    @Builder.Default
 //    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY)

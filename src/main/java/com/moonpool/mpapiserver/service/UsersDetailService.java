@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Log4j2
 @RequiredArgsConstructor
 @Service
@@ -22,21 +24,23 @@ public class UsersDetailService implements UserDetailsService {
     private final MemberRepository memberRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("..........userdetailsservice 시작 ........");
-        Optional<Member> result = memberRepository.findByUsername(username);
-        if (result.isEmpty()){
-            throw new UsernameNotFoundException(username+"라는 아이디 없음");
+        log.info("---------userdetailservice");
+        log.info(username);
+        Member member = memberRepository.getWithRoles(username);
+        if (member == null){
+            throw new UsernameNotFoundException("NOT FOUNT");
         }
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        Member user = result.get();
-        UserDto userDto = new UserDto(user.getUsername(), user.getPassword(), authorities);
-        userDto.id = user.getId();
-        userDto.username = user.getUsername();
-        userDto.intro = user.getIntro();
-        userDto.displayName = user.getDisplayName();
-        userDto.educationState = user.getEducationState();
-        userDto.coin = user.getCoin();
+        log.info(member);
+        UserDto userDto = new UserDto(
+                member.getId(),
+                member.getUsername(),
+                member.getPassword(),
+                member.getDisplayName(),
+                member.getIntro(),
+                member.getEducationState(),
+                member.getCoin(),
+                member.getMemberRoleList().stream().map(memberRole -> memberRole.name()).collect(Collectors.toList()));
+        log.info("--------userdetailservice end-------------");
         log.info(userDto);
         return userDto;
     }

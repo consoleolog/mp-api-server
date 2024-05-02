@@ -27,4 +27,7 @@ List<?> findAllByTitle(String title);
 
 @Query(value = "SELECT COUNT(p) FROM Problem p WHERE p.category=:category")
 Long countByCategory(@Param("category") String category);
+
+
+
 }

@@ -1,5 +1,6 @@
 package com.moonpool.mpapiserver.service.impl;
 
+import com.moonpool.mpapiserver.dto.AnswerDto;
 import com.moonpool.mpapiserver.dto.ProblemDto;
 import com.moonpool.mpapiserver.entity.Problem;
 import jakarta.transaction.Transactional;
@@ -15,4 +16,6 @@ public interface ProblemService {
     Map<String, Object> getList(Long id, String category);
 
     void modify(ProblemDto problemDto) throws IOException;
+
+    Boolean checkAnswer(AnswerDto answerDto);
 }

@@ -1,5 +1,6 @@
 package com.moonpool.mpapiserver.controller;
 
+import com.moonpool.mpapiserver.dto.AnswerDto;
 import com.moonpool.mpapiserver.dto.ProblemDto;
 import com.moonpool.mpapiserver.entity.Problem;
 import com.moonpool.mpapiserver.handler.FileHandler;
@@ -48,6 +49,9 @@ public class ProblemController {
         problemService.modify(problemDto);
         return ResponseEntity.status(200).body("수정 완료");
     }
-
-
+    @PostMapping("/check/answer")
+    public ResponseEntity<Boolean> checkAnswer(@RequestBody AnswerDto answerDto){
+        Boolean result = problemService.checkAnswer(answerDto);
+        return ResponseEntity.status(200).body(result);
+    }
 }

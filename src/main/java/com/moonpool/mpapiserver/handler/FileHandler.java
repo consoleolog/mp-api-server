@@ -51,11 +51,12 @@ public class FileHandler {
         if (quizFile == null || quizFile.isEmpty()){
             return "";
         }
-        String savedName = UUID.randomUUID().toString()+"Q_"+quizFile.getOriginalFilename();
+        String savedName = UUID.randomUUID().toString()+"_"+quizFile.getOriginalFilename();
         Path savePath = Paths.get(uploadPath,savedName);
         quizFile.transferTo(savePath);
         return savedName;
     }
+
     public ResponseEntity<Resource> getFile(String fileName){ //파일 조회
         Resource resource = new FileSystemResource(uploadPath+File.separator+fileName); //경로에있는 파일들 조회
         if(!resource.isReadable()){

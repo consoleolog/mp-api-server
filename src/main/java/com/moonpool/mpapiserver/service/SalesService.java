@@ -10,6 +10,7 @@ import com.moonpool.mpapiserver.repository.SalesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -33,7 +34,18 @@ public class SalesService {
         }
         return answer.getAnswerImgName();
     }
-    public void getOne(){
-        //문제 아이디가 필요할것같은ㄷ[
+    public Problem getAnswer(Long problemId){
+        return salesRepository.findByProblemId(problemId);
+    }
+    public Object getOne(SalesDto salesDto){
+         //문제 아이디가 필요할것같은ㄷ
+        Long memberId = 11L;
+        Optional<?> result = salesRepository.findAnswerByProblemIdAndMemberId(salesDto.getProblemId(),salesDto.getMemberId());
+        Object sales = result.orElseThrow();
+        return  sales;
+    }
+    public List getList(Long memberId){
+        List<?> result = salesRepository.findAllByMemberId(memberId);
+        return result;
     }
 }

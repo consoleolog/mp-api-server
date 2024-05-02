@@ -1,5 +1,6 @@
 package com.moonpool.mpapiserver.service;
 
+import com.moonpool.mpapiserver.dto.AnswerDto;
 import com.moonpool.mpapiserver.dto.ProblemDto;
 import com.moonpool.mpapiserver.entity.Member;
 import com.moonpool.mpapiserver.entity.Problem;
@@ -88,5 +89,18 @@ public class ProblemServiceImpl implements ProblemService {
         }
         problemRepository.save(problem);
     }
-
+    @Override
+    public Boolean checkAnswer(AnswerDto answerDto){
+        Optional<Problem> pResult = problemRepository.findById(answerDto.getProblemId());
+        Problem problem = pResult.orElseThrow();
+        Integer answer = problem.getAnswer();
+        Optional<Member> mResult = memberRepository.findById(answerDto.getMemberId());
+        Member member = mResult.orElseThrow();
+        if (Objects.equals(answer, answerDto.getAnswer())){
+            member.changeCoin(member.getCoin() + 100);
+            memberRepository.save(member);
+            return true;
+        }
+        return false;
+    }
 }

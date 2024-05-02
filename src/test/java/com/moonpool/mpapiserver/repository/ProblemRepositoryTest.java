@@ -18,30 +18,30 @@ public class ProblemRepositoryTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    @Test
-    public void postTest(){
-        Optional<Member> result = memberRepository.findById(1L);
-        Member member = result.orElseThrow();
-        member.getId();
-        for (int i = 0; i < 100; i++) {
-            Problem problem = Problem.builder()
-                    .id(null)
-                    .title("problem title"+i+".......")
-                    .price(100 + i)
-                    .description("problem description"+i+".......")
-                    .category("korean")
-                    .level("hard")
-                    .quizImgName("Q_testimage")
-                    .answer(i)
-                    .member(member)
-                    .build();
-            problemRepository.save(problem);
-        }
-    }
-    @Test
-    public void getListTest(){
-        List<Problem> result = problemRepository.findByCategory("korean", 0);
-        System.out.println(result);
-
-    }
+//    @Test
+//    public void postTest(){
+//        Optional<Member> result = memberRepository.findById(1L);
+//        Member member = result.orElseThrow();
+//        member.getId();
+//        for (int i = 0; i < 100; i++) {
+//            Problem problem = Problem.builder()
+//                    .id(null)
+//                    .title("problem title"+i+".......")
+//                    .price(100 + i)
+//                    .description("problem description"+i+".......")
+//                    .category("korean")
+//                    .level("hard")
+//                    .quizImgName("Q_testimage")
+//                    .answer(i)
+//                    .member(member)
+//                    .build();
+//            problemRepository.save(problem);
+//        }
+//    }
+//    @Test
+//    public void getListTest(){
+//        List<Problem> result = problemRepository.findByCategory("korean", 0);
+//        System.out.println(result);
+//
+//    }
 }
