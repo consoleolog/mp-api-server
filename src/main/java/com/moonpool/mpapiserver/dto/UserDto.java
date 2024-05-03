@@ -22,7 +22,7 @@ public class UserDto extends User {
 
     private List<String> roleNames = new ArrayList<>();
 
-    public UserDto(Long id, String username, String password, String intro, String displayName, String educationState, Integer coin,List<String> roleNames) {
+    public UserDto(Long id, String username, String password, String displayName,  String intro,String educationState, Integer coin,List<String> roleNames) {
         super(username,
                 password,
                 roleNames.stream().map(str->new SimpleGrantedAuthority("ROLE"+str)).collect(Collectors.toList()));

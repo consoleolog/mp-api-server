@@ -43,8 +43,8 @@ public class MemberController {
 //    }
     @GetMapping("/user-detail-data")
     public ResponseEntity<?> getUserInfo(Authentication auth) {
-//        Map<String, Object> result = memberService.userInfo(auth);
-        return ResponseEntity.ok(auth.getPrincipal());
+        Map<String, Object> result = memberService.userInfo(auth);
+        return ResponseEntity.ok(result);
     }
 
 }

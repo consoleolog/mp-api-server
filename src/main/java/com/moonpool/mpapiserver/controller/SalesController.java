@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 public class SalesController {
     private final SalesService salesService;
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping("/purchase")
     public ResponseEntity<String> purchase(@RequestBody SalesDto salesDto) throws Exception {
         log.info(salesDto);
@@ -26,19 +25,16 @@ public class SalesController {
         log.info(result);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping("/items")
     public ResponseEntity<?> getOne(@RequestBody SalesDto salesDto){
         var result = salesService.getOne(salesDto);
         return ResponseEntity.status(200).body(result);
     }
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping("/items/{id}")
     public ResponseEntity<?> getAnswer(@PathVariable("id")Long id){
         var result = salesService.getAnswer(id);
         return ResponseEntity.status(200).body(result);
     }
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping("/member-id/{id}")
     public ResponseEntity<List> getList(@PathVariable("id")Long id){
         List<?> result = salesService.getList(id);
