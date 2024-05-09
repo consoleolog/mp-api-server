@@ -1,6 +1,9 @@
 package com.moonpool.mpapiserver.config;
 
 import com.moonpool.mpapiserver.handler.CustomAccessDeniedHandler;
+import com.moonpool.mpapiserver.handler.LoginFailHandler;
+import com.moonpool.mpapiserver.handler.LoginSuccessHandler;
+import com.moonpool.mpapiserver.config.JwtCheckFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
@@ -34,9 +37,9 @@ public class SecurityConfig {
         http.cors(cors -> { //cors설정을 사용하겠다 라는 코드
             cors.configurationSource(corsConfigurationSource());
         });
-//        http.sessionManagement(session -> {//세션 생성 안함
-//            session.sessionCreationPolicy(SessionCreationPolicy.NEVER);
-//        });
+        http.sessionManagement(session -> {//세션 생성 안함
+            session.sessionCreationPolicy(SessionCreationPolicy.NEVER);
+        });
         http.csrf((csrf)->csrf.disable()); //csrf 비활성화
 
         http.authorizeHttpRequests(config->{
@@ -44,24 +47,16 @@ public class SecurityConfig {
         });
         http.formLogin(formLogin -> {
             formLogin.loginPage("/mp/members/login");
-//            formLogin.successHandler(new LoginSuccessHandler());
-//            formLogin.failureHandler(new LoginFailHandler());
-//            formLogin.failureHandler(new LoginFailHandler());
-            formLogin.defaultSuccessUrl("/mp/members");
+            formLogin.successHandler(new LoginSuccessHandler());
+            formLogin.failureHandler(new LoginFailHandler());
+//            formLogin.defaultSuccessUrl("/mp/members");
         });
         // UsernamePasswordAuthenticationFilter.class 전에 jwtcheckfilter 실행 시켜줘
-//        http.addFilterBefore(new JwtCheckFilter(), UsernamePasswordAuthenticationFilter.class);
-        // 멤버 권한 예외 전역 처리
-//        http.exceptionHandling(config -> {
-//            config.accessDeniedHandler(new CustomAccessDeniedHandler());
-//        });
-        http.logout(logout ->
-                logout.logoutUrl("/mp/members/logout")
-                        .invalidateHttpSession(true) // HTTP 세션 무효화
-                        .deleteCookies("JSESSIONID") // 쿠키 삭제
-                        .logoutSuccessUrl("/mp/members")
-        );
-
+        http.addFilterBefore(new JwtCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+         //멤버 권한 예외 전역 처리
+        http.exceptionHandling(config -> {
+            config.accessDeniedHandler(new CustomAccessDeniedHandler());
+        });
         return http.build();
     }
 //    @Bean //cors 설정
@@ -83,7 +78,6 @@ public class SecurityConfig {
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","HEAD","OPTIONS"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**",configuration);
         return source;

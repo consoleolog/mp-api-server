@@ -30,7 +30,6 @@ public class FileHandler {
         }
         uploadPath = saveFolder.getAbsolutePath();
     }
-
     public List<String> saveAnswerFiles(List<MultipartFile> answerFiles) throws RuntimeException{
         List<String> answeImgrNames = new ArrayList<>();
         if(answerFiles == null || answerFiles.isEmpty()){

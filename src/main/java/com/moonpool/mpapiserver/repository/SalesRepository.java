@@ -18,5 +18,6 @@ public interface SalesRepository extends JpaRepository<Sales,Long> {
 
     @Query("SELECT  p FROM Problem p INNER JOIN Sales s ON s.problemId=p.id WHERE s.problemId=:problemId")
     Problem findByProblemId(@Param("problemId")Long problemId);
-
+    @Query("SELECT s.problemId FROM Sales s WHERE s.memberId=:id")
+    List<Long> findPidListAllByMemberId(@Param("id")Long id );
 }

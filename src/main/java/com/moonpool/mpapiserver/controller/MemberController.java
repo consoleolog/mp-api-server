@@ -2,12 +2,15 @@ package com.moonpool.mpapiserver.controller;
 
 
 import com.moonpool.mpapiserver.dto.MemberDto;
+import com.moonpool.mpapiserver.dto.UserDto;
 import com.moonpool.mpapiserver.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,5 +49,9 @@ public class MemberController {
         Map<String, Object> result = memberService.userInfo(auth);
         return ResponseEntity.ok(result);
     }
-
+    @GetMapping("/user-information")
+    public ResponseEntity<?> get(){
+        var result =  SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.ok(result);
+    }
 }

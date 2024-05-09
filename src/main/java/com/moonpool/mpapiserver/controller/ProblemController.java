@@ -32,12 +32,16 @@ public class ProblemController {
         Object result = (Problem) problemService.getOne(id);
         return ResponseEntity.ok(result);
     }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteOne(@PathVariable("id")Long id){
+        problemService.delete(id);
+        return ResponseEntity.ok("삭제 완료");
+    }
     @PostMapping("/post")
     public ResponseEntity<String> post(ProblemDto problemDto) throws IOException {
-        problemService.post(problemDto);
+        String result = problemService.post(problemDto);
 //        log.info(problemDto.getAnswerImgFile().getOriginalFilename());
-        log.info(problemDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body("문제 등록 완료");
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
     @GetMapping("/view/{fileName}")
     public ResponseEntity<Resource> getFile(@PathVariable("fileName")String fileName){
@@ -53,5 +57,10 @@ public class ProblemController {
     public ResponseEntity<Boolean> checkAnswer(@RequestBody AnswerDto answerDto){
         Boolean result = problemService.checkAnswer(answerDto);
         return ResponseEntity.status(200).body(result);
+    }
+    @GetMapping("/made/{id}")
+    public ResponseEntity<?> getMadeList(@PathVariable("id")Long id){
+        var result = problemService.madeList(id);
+        return ResponseEntity.ok(result);
     }
 }

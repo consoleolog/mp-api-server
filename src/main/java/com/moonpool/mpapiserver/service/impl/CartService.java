@@ -1,16 +1,17 @@
 package com.moonpool.mpapiserver.service.impl;
 
 import com.moonpool.mpapiserver.dto.CartDto;
-import com.moonpool.mpapiserver.entity.Cart;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
 
 @Transactional
 public interface CartService {
-    void register(CartDto cartDto);
+    Boolean register(CartDto cartDto);
 
     List<?> getList(Long id);
 
     void delete(Long id);
+
+    void deleteAll(Long id);
 }

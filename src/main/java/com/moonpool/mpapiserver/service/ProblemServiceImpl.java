@@ -29,7 +29,11 @@ public class ProblemServiceImpl implements ProblemService {
         return problem;
     }
     @Override
-    public void post(ProblemDto problemDto) throws IOException {
+    public void delete(Long id ){
+        problemRepository.deleteById(id);
+    }
+    @Override
+    public String post(ProblemDto problemDto) throws IOException {
         String quizImgName = fileHandler.saveFile(problemDto.getQuizImgFile());
         String answerImgName = fileHandler.saveFile(problemDto.getAnswerImgFile());
         Optional<Member> result = memberRepository.findById(problemDto.getWriterId());
@@ -45,7 +49,8 @@ public class ProblemServiceImpl implements ProblemService {
                 .answer(problemDto.getAnswer())
                 .writerId(problemDto.getWriterId())
                 .build();
-        problemRepository.save(problem);
+        Problem p = problemRepository.save(problem);
+        return p.getCategory();
     }
 
     @Override
@@ -102,5 +107,10 @@ public class ProblemServiceImpl implements ProblemService {
             return true;
         }
         return false;
+    }
+    @Override
+    public List madeList(Long id){
+        List<?> result = problemRepository.findAllByMemberId(id);
+        return result;
     }
 }

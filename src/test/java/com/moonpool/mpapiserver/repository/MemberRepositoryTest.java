@@ -31,7 +31,7 @@ public class MemberRepositoryTest {
     }
     @Test
     public void testInsertMember(){
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             Member member = Member.builder()
                     .username("user"+i+10+"@test.com")
                     .password(passwordEncoder.encode("1111"))
@@ -40,12 +40,6 @@ public class MemberRepositoryTest {
                     .educationState("university")
                     .build();
             member.addRole(MemberRole.USER);
-            if ( i > 5 ){
-                member.addRole(MemberRole.MANAGER);
-            }
-            if (i > 8){
-                member.addRole(MemberRole.ADMIN);
-            }
             memberRepository.save(member);
         }
 

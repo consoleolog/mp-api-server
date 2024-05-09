@@ -1,5 +1,6 @@
 package com.moonpool.mpapiserver.controller;
 
+import com.moonpool.mpapiserver.dto.ProblemListDto;
 import com.moonpool.mpapiserver.dto.SalesDto;
 import com.moonpool.mpapiserver.entity.Sales;
 import com.moonpool.mpapiserver.service.SalesService;
@@ -19,10 +20,8 @@ import java.util.List;
 public class SalesController {
     private final SalesService salesService;
     @PostMapping("/purchase")
-    public ResponseEntity<String> purchase(@RequestBody SalesDto salesDto) throws Exception {
-        log.info(salesDto);
-        String result = salesService.purchase(salesDto);
-        log.info(result);
+    public ResponseEntity<Boolean> purchase(@RequestBody SalesDto salesDto) throws Exception {
+        Boolean result = salesService.purchase(salesDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
     @GetMapping("/items")
@@ -39,5 +38,10 @@ public class SalesController {
     public ResponseEntity<List> getList(@PathVariable("id")Long id){
         List<?> result = salesService.getList(id);
         return ResponseEntity.status(200).body(result);
+    }
+    @PostMapping("/purchase/all")
+    public ResponseEntity<?> purcahseList(@RequestBody ProblemListDto problemListDto){
+        var result = salesService.purchaseAll(problemListDto);
+        return ResponseEntity.ok(result);
     }
 }
